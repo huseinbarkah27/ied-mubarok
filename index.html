@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown Idul Fitri</title>
+    <style>
+      body {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        background-image: url(vecteezy_islamic.jpg);
+        background-position: cover;
+      }
+      h1 {
+        font-size: 20px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        margin-top: 180px;
+        color: rgb(48, 47, 47);
+      }
+      #countdown {
+        color: rgb(117, 84, 42);
+        font-size: 20px;
+        margin-top: 20px;
+      }
+
+      h2 {
+        margin-top: 80px;
+        color: rgb(216, 129, 16);
+        font-size: 40px;
+      }
+
+      h3 {
+        margin-top: 90px;
+        font-size: 30px;
+      }
+
+      #celebration {
+        display: none;
+        margin-top: 80px;
+        font-size: 2.5em;
+        color: rgb(202, 126, 40);
+        font-weight: bold;
+        opacity: 0;
+        transition: opacity 2s ease-in-out;
+      }
+      .falling-item {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        opacity: 0.7;
+        border-radius: 50%;
+        animation: fall linear infinite;
+      }
+      @keyframes fall {
+        from {
+          transform: translateY(-100vh);
+        }
+        to {
+          transform: translateY(100vh);
+        }
+      }
+      @media (max-width: 768px) {
+        h1,
+        #countdown {
+          font-size: 26px;
+        }
+        #celebration {
+          font-size: 3em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title">Countdown 1 Syawwal 1446 H</h1>
+    <div id="countdown"></div>
+    <div id="celebration">
+      Selamat Hari Raya Idul Fitri 1446 H 🌙✨
+      <h2>تقبّل اللّه منّا و ومنكم صالح الأعمالا</h2>
+      <h3>Mohon Maaf Lahir & Batin</h3>
+    </div>
+
+    <script>
+      function countdown() {
+        const targetDate = new Date("2025-03-30T18:30:00"); // Sesuaikan dengan tanggal Idul Fitri
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          document.getElementById("countdown").style.display = "none";
+          document.getElementById("title").style.display = "none"; // Sembunyikan h1
+
+          const celebration = document.getElementById("celebration");
+          celebration.style.display = "block";
+          setTimeout(() => (celebration.style.opacity = 1), 500);
+          showFallingItems();
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById(
+          "countdown"
+        ).innerHTML = `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
+        setTimeout(countdown, 1000);
+      }
+
+      function showFallingItems() {
+        const items = ["🌙", "⭐"]; // Bulan dan bintang emoji
+        for (let i = 0; i < 50; i++) {
+          // Jumlah animasi yang jatuh
+          let fallingItem = document.createElement("div");
+          fallingItem.className = "falling-item";
+          fallingItem.innerHTML =
+            items[Math.floor(Math.random() * items.length)];
+          fallingItem.style.left = Math.random() * 100 + "vw";
+          fallingItem.style.animationDuration = Math.random() * 3 + 2 + "s";
+          document.body.appendChild(fallingItem);
+          setTimeout(() => fallingItem.remove(), 3000);
+        }
+      }
+
+      countdown();
+    </script>
+  </body>
+</html>
